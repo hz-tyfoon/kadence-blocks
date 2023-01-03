@@ -16,6 +16,7 @@ import {
 	getSpacingOptionOutput,
 	getFontSizeOptionOutput,
 	getBorderStyle,
+	getUniqueId
 } from '@kadence/helpers';
 import {
 	PopColorControl,
@@ -198,28 +199,12 @@ function KadenceTableOfContents( { attributes, setAttributes, clientId, classNam
 	const titleMouseOver = mouseOverVisualizer();
 	const contentMouseOver = mouseOverVisualizer();
 	useEffect( () => {
-		let smallID = '_' + clientId.substr( 2, 9 );
-		if ( ! uniqueID ) {
-			attributes = setBlockDefaults( 'kadence/tableofcontents', attributes);
-			if ( ! isUniqueID( smallID ) ) {
-				smallID = uniqueId( smallID );
-			}
-			setAttributes( {
-				uniqueID: smallID,
-			} );
-			addUniqueID( smallID, clientId );
-		} else if ( ! isUniqueID( uniqueID ) ) {
-			// This checks if we are just switching views, client ID the same means we don't need to update.
-			if ( ! isUniqueBlock( uniqueID, clientId ) ) {
-				attributes.uniqueID = smallID;
-				addUniqueID( smallID, clientId );
-			}
-		} else {
-			addUniqueID( uniqueID, clientId );
-		}
-		if ( undefined !== startClosed && startClosed ) {
-			setShowContent( false );
-		}
+		setBlockDefaults( 'kadence/tableofcontents', attributes);
+
+		let uniqueId = getUniqueId( uniqueID, clientId, isUniqueID, isUniqueBlock );
+		setAttributes( { uniqueID: uniqueId } );
+		addUniqueID( uniqueId, clientId );
+
 		// Update from old border settings.
 		let tempBorderStyle = JSON.parse( JSON.stringify( attributes.borderStyle ? attributes.borderStyle : [{ 
 			top: [ '', '', '' ],
