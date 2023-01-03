@@ -9,6 +9,8 @@ import {
 	KadenceColorOutput,
 	showSettings,
 	getPreviewSize,
+	getUniqueId,
+	setBlockDefaults
 } from '@kadence/helpers';
 import {
 	PopColorControl,
@@ -88,31 +90,11 @@ function KadenceSpacerDivider( { attributes, className, clientId, setAttributes,
 	} = attributes;
 
 	useEffect( () => {
-		if ( !uniqueID ) {
-			const oldBlockConfig = kadence_blocks_params.config && kadence_blocks_params.config[ 'kadence/spacer' ] ? kadence_blocks_params.config[ 'kadence/spacer' ] : undefined;
-			const blockConfigObject = ( kadence_blocks_params.configuration ? JSON.parse( kadence_blocks_params.configuration ) : [] );
-			if ( blockConfigObject[ 'kadence/spacer' ] !== undefined && typeof blockConfigObject[ 'kadence/spacer' ] === 'object' ) {
-				Object.keys( blockConfigObject[ 'kadence/spacer' ] ).map( ( attribute ) => {
-					attributes[ attribute ] = blockConfigObject[ 'kadence/spacer' ][ attribute ];
-				} );
-			} else if ( oldBlockConfig !== undefined && typeof oldBlockConfig === 'object' ) {
-				Object.keys( oldBlockConfig ).map( ( attribute ) => {
-					attributes[ attribute ] = oldBlockConfig[ attribute ];
-				} );
-			}
-			setAttributes( {
-				uniqueID: '_' + clientId.substr( 2, 9 ),
-			} );
-			ktspacerUniqueIDs.push( '_' + clientId.substr( 2, 9 ) );
-		} else if ( ktspacerUniqueIDs.includes( uniqueID ) ) {
-			if( uniqueID !== '_' + clientId.substr( 2, 9 ) ) {
-				setAttributes( { uniqueID: '_' + clientId.substr( 2, 9 ) } );
-				ktspacerUniqueIDs.push( '_' + clientId.substr( 2, 9 ) );
-			}
-		} else {
-			ktspacerUniqueIDs.push( uniqueID );
-		}
+		setBlockDefaults( 'kadence/spacer', attributes);
 
+		let uniqueId = getUniqueId( uniqueID, clientId, isUniqueID, isUniqueBlock );
+		setAttributes( { uniqueID: uniqueId } );
+		addUniqueID( uniqueId, clientId );
 	}, [] );
 
 	const [ activeTab, setActiveTab ] = useState( 'general' );
