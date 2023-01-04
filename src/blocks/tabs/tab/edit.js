@@ -10,10 +10,11 @@ import {
 	useBlockProps
 } from '@wordpress/block-editor';
 
-/**
- * This allows for checking to see if the block needs to generate a new ID.
- */
-const kttabUniqueIDs = [];
+import {
+	getUniqueId,
+} from '@kadence/helpers';
+
+import { useSelect, useDispatch } from '@wordpress/data';
 
 /**
  * Build the spacer edit
@@ -22,20 +23,21 @@ function KadenceTab( { attributes, setAttributes, clientId } ) {
 
 	const { id, uniqueID } = attributes;
 
+	const { addUniqueID } = useDispatch( 'kadenceblocks/data' );
+	const { isUniqueID, isUniqueBlock } = useSelect(
+		( select ) => {
+			return {
+				isUniqueID: ( value ) => select( 'kadenceblocks/data' ).isUniqueID( value ),
+				isUniqueBlock: ( value, clientId ) => select( 'kadenceblocks/data' ).isUniqueBlock( value, clientId ),
+			};
+		},
+		[ clientId ]
+	);
+
 	useEffect( () => {
-		if ( !uniqueID ) {
-			setAttributes( {
-				uniqueID: '_' + clientId.substr( 2, 9 ),
-			} );
-			kttabUniqueIDs.push( '_' + clientId.substr( 2, 9 ) );
-		} else if ( kttabUniqueIDs.includes( uniqueID ) ) {
-			if( uniqueID !== '_' + clientId.substr( 2, 9 ) ) {
-				setAttributes({uniqueID: '_' + clientId.substr(2, 9)});
-				kttabUniqueIDs.push('_' + clientId.substr(2, 9));
-			}
-		} else {
-			kttabUniqueIDs.push( uniqueID );
-		}
+		let uniqueId = getUniqueId( uniqueID, clientId, isUniqueID, isUniqueBlock );
+		setAttributes( { uniqueID: uniqueId } );
+		addUniqueID( uniqueId, clientId );
 	}, [] );
 
 	const hasChildBlocks = wp.data.select( 'core/block-editor' ).getBlockOrder( clientId ).length > 0;

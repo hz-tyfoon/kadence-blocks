@@ -31,7 +31,9 @@ import {
 	KadenceColorOutput,
 	showSettings,
 	getSpacingOptionOutput,
-	getPreviewSize
+	getPreviewSize,
+	getUniqueId,
+	setBlockDefaults
 } from '@kadence/helpers';
 import {
 	PopColorControl,
@@ -55,7 +57,7 @@ import metadata from './block.json';
 import {
 	createBlock,
 } from '@wordpress/blocks';
-import { withSelect, withDispatch } from '@wordpress/data';
+import { withSelect, withDispatch, useSelect, useDispatch } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import {
 	useState,
@@ -125,33 +127,23 @@ function KadenceTabs( { attributes, clientId, className, setAttributes, tabsBloc
 	const [ contentBorderRadiusControl, setContentBorderRadiusControl ] = useState( 'individual' );
 	const [ activeTab, setActiveTab ] = useState( 'general' );
 
+	const { addUniqueID } = useDispatch( 'kadenceblocks/data' );
+	const { isUniqueID, isUniqueBlock } = useSelect(
+		( select ) => {
+			return {
+				isUniqueID: ( value ) => select( 'kadenceblocks/data' ).isUniqueID( value ),
+				isUniqueBlock: ( value, clientId ) => select( 'kadenceblocks/data' ).isUniqueBlock( value, clientId ),
+			};
+		},
+		[ clientId ]
+	);
+
 	useEffect( () => {
-		if ( ! uniqueID ) {
-			const oldBlockConfig = kadence_blocks_params.config[ 'kadence/tabs' ];
-			const blockConfigObject = ( kadence_blocks_params.configuration ? JSON.parse( kadence_blocks_params.configuration ) : [] );
-			if ( blockConfigObject[ 'kadence/tabs' ] !== undefined && typeof blockConfigObject[ 'kadence/tabs' ] === 'object' ) {
-				Object.keys( blockConfigObject[ 'kadence/tabs' ] ).map( ( attribute ) => {
-					attributes[ attribute ] = blockConfigObject[ 'kadence/tabs' ][ attribute ];
-				} );
-			} else if ( oldBlockConfig !== undefined && typeof oldBlockConfig === 'object' ) {
-				Object.keys( oldBlockConfig ).map( ( attribute ) => {
-					attributes[ attribute ] = oldBlockConfig[ attribute ];
-				} );
-			} else {
-				setShowPreset( true );
-			}
-			setAttributes( {
-				uniqueID: '_' + clientId.substr( 2, 9 ),
-			} );
-			kttabsUniqueIDs.push( '_' + clientId.substr( 2, 9 ) );
-		} else if ( kttabsUniqueIDs.includes( uniqueID ) ) {
-			if( uniqueID !== '_' + clientId.substr( 2, 9 ) ) {
-				setAttributes({uniqueID: '_' + clientId.substr(2, 9)});
-				kttabsUniqueIDs.push('_' + clientId.substr(2, 9));
-			}
-		} else {
-			kttabsUniqueIDs.push( uniqueID );
-		}
+		setBlockDefaults( 'kadence/tabs', attributes);
+
+		let uniqueId = getUniqueId( uniqueID, clientId, isUniqueID, isUniqueBlock );
+		setAttributes( { uniqueID: uniqueId } );
+		addUniqueID( uniqueId, clientId );
 	}, [] );
 
 	const previewInnerPaddingTop = getPreviewSize( previewDevice, ( undefined !== innerPadding ? innerPadding[0] : '' ), ( undefined !== tabletInnerPadding ? tabletInnerPadding[ 0 ] : '' ), ( undefined !== mobileInnerPadding ? mobileInnerPadding[ 0 ] : '' ) );
