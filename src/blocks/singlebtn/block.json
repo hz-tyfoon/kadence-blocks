@@ -244,7 +244,11 @@
 		"type": "array",
 		"default": [ "", "", "", "" ]
 	},
-	"tableIconPadding": {
+	"iconPaddingUnit": {
+		"type": "string",
+		"default": "px"
+	},
+	"tabletIconPadding": {
 		"type": "array",
 		"default": [ "", "", "", "" ]
 	},
