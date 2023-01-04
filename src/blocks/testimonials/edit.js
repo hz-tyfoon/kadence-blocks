@@ -56,6 +56,8 @@ import {
     setBlockDefaults,
     mouseOverVisualizer,
     getGapSizeOptionOutput,
+    getUniqueId,
+    getInQueryBlock
 } from '@kadence/helpers';
 
 /**
@@ -95,14 +97,8 @@ import classnames from 'classnames';
 /**
  * Build the overlay edit
  */
-function KadenceTestimonials({
-                                 attributes,
-                                 setAttributes,
-                                 className,
-                                 clientId,
-                                 isSelected,
-                                 context,
-                             }) {
+function KadenceTestimonials( props ) {
+    const { attributes, setAttributes, className, clientId, isSelected, context } = props
 
     const {
         uniqueID,
@@ -189,27 +185,14 @@ function KadenceTestimonials({
     );
 
     useEffect(() => {
+		setBlockDefaults( 'kadence/testimonials', attributes);
 
-        let smallID = '_' + clientId.substr(2, 9);
-        if (!uniqueID) {
-            attributes = setBlockDefaults( 'kadence/testimonials', attributes);
+		let uniqueId = getUniqueId( uniqueID, clientId, isUniqueID, isUniqueBlock );
+		setAttributes( { uniqueID: uniqueId } );
+		addUniqueID( uniqueId, clientId );
 
-            setAttributes({
-                uniqueID: smallID,
-            });
-            addUniqueID(smallID, clientId);
-        } else if (!isUniqueID(uniqueID)) {
-            // This checks if we are just switching views, client ID the same means we don't need to update.
-            if (!isUniqueBlock(uniqueID, clientId)) {
-                attributes.uniqueID = smallID;
-                setAttributes({
-                    uniqueID: smallID,
-                });
-                addUniqueID(smallID, clientId);
-            }
-        } else {
-            addUniqueID(uniqueID, clientId);
-        }
+		setAttributes( { inQueryBlock: getInQueryBlock( context, inQueryBlock ) } );
+
         // Update from old gutter settings.
         if ( columnGap !== '' ) {
             setAttributes( { gap: [ columnGap, '', '' ], columnGap: '' } );
@@ -264,18 +247,6 @@ function KadenceTestimonials({
             setIconMarginControl('linked');
         } else {
             setIconMarginControl('individual');
-        }
-
-        if (context && context.queryId && context.postId) {
-            if (context.queryId !== inQueryBlock) {
-                setAttributes({
-                    inQueryBlock: context.queryId,
-                });
-            }
-        } else if (inQueryBlock) {
-            setAttributes({
-                inQueryBlock: false,
-            });
         }
     }, []);
 

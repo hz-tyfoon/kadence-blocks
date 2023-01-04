@@ -48,7 +48,9 @@ import {
     KadenceColorOutput,
     showSettings,
     setBlockDefaults,
-    getSpacingOptionOutput
+    getSpacingOptionOutput,
+    getUniqueId,
+    getInQueryBlock,
 } from '@kadence/helpers';
 
 /**
@@ -177,39 +179,13 @@ function KadenceTestimonials({
     );
 
     useEffect(() => {
+		setBlockDefaults( 'kadence/testimonial', attributes);
 
-        let smallID = '_' + clientId.substr(2, 9);
-        if (!uniqueID) {
-            attributes = setBlockDefaults( 'kadence/testimonial', attributes);
+		let uniqueId = getUniqueId( uniqueID, clientId, isUniqueID, isUniqueBlock );
+		setAttributes( { uniqueID: uniqueId } );
+		addUniqueID( uniqueId, clientId );
 
-            setAttributes({
-                uniqueID: smallID,
-            });
-            addUniqueID(smallID, clientId);
-        } else if (!isUniqueID(uniqueID)) {
-            // This checks if we are just switching views, client ID the same means we don't need to update.
-            if (!isUniqueBlock(uniqueID, clientId)) {
-                attributes.uniqueID = smallID;
-                setAttributes({
-                    uniqueID: smallID,
-                });
-                addUniqueID(smallID, clientId);
-            }
-        } else {
-            addUniqueID(uniqueID, clientId);
-        }
-
-        if (context && context.queryId && context.postId) {
-            if (context.queryId !== inQueryBlock) {
-                setAttributes({
-                    inQueryBlock: context.queryId,
-                });
-            }
-        } else if (inQueryBlock) {
-            setAttributes({
-                inQueryBlock: false,
-            });
-        }
+		setAttributes( { inQueryBlock: getInQueryBlock( context, inQueryBlock ) } );
     }, []);
 
     const previewIconSize = getPreviewSize( previewDevice, ( undefined !== isize ? isize : ''), ( undefined !== tabletIsize ? tabletIsize : ''), ( undefined !== mobileIsize ? mobileIsize : '') );
