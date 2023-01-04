@@ -136,7 +136,7 @@ function KadenceSingleIcon( { attributes, className, setAttributes, clientId, co
     );
 
     useEffect( () => {
-		setBlockDefaults( 'kadence/advancedheading', attributes);
+		setBlockDefaults( 'kadence/single-icon', attributes);
 
 		let uniqueId = getUniqueId( uniqueID, clientId, isUniqueID, isUniqueBlock );
 		setAttributes( { uniqueID: uniqueId } );
