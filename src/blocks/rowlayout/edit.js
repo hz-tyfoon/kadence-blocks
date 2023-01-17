@@ -183,6 +183,7 @@ const ALLOWED_BLOCKS = [ 'kadence/column' ];
 		[ clientId ]
 	);
 	useEffect( () => {
+		console.log('setting block defaults');
 		setBlockDefaults( 'kadence/rowlayout', attributes);
 
 		let uniqueId = getUniqueId( uniqueID, clientId, isUniqueID, isUniqueBlock );
@@ -343,13 +344,21 @@ const ALLOWED_BLOCKS = [ 'kadence/column' ];
 	}, [] );
 	const { innerItemCount } = useSelect(
 		( select ) => {
+			console.log('inner item count')
+			console.log(blockEditorStore);
+			console.log(clientId);
+			let temp = select( blockEditorStore ).getBlockCount( clientId );
+			console.log(temp);
 			return {
-				innerItemCount: select( blockEditorStore ).getBlockCount( clientId ),
+				innerItemCount: temp,
 			};
 		},
 		[ clientId ]
 	);
 	useEffect( () => {
+		console.log('in effect')
+		console.log(innerItemCount)
+		console.log(columns)
 		if ( innerItemCount < columns ) {
 			updateColumns( innerItemCount, columns );
 		}
@@ -570,6 +579,9 @@ const ALLOWED_BLOCKS = [ 'kadence/column' ];
 	);
 	const paddingMouseOver = mouseOverVisualizer();
 	const marginMouseOver = mouseOverVisualizer();
+
+	const nonTransAttrs = ['columns', 'mobileLayout', 'currentTab', 'colLayout'];
+
 	return (
 		<>
 			{ 'contentOnly' !== templateLock && showSettings( 'allSettings', 'kadence/rowlayout' ) && (
@@ -662,6 +674,7 @@ const ALLOWED_BLOCKS = [ 'kadence/column' ];
 					<CopyPasteAttributes
 						attributes={ attributes }
 						defaultAttributes={ metadata['attributes'] } 
+						excludedAttrs={ nonTransAttrs }
 						blockSlug={ metadata['name'] } 
 						onPaste={ attributesToPaste => setAttributes( attributesToPaste ) }
 					/>
@@ -928,7 +941,7 @@ const ALLOWED_BLOCKS = [ 'kadence/column' ];
 									</>
 								) }
 
-								<KadenceBlockDefaults attributes={attributes} defaultAttributes={metadata['attributes']} blockSlug={ metadata['name'] } />
+								<KadenceBlockDefaults attributes={attributes} defaultAttributes={metadata['attributes']} blockSlug={ metadata['name'] } excludedAttrs={ nonTransAttrs } />
 							</>
 						) }
 					</InspectorControls>
@@ -1079,6 +1092,7 @@ const ALLOWED_BLOCKS = [ 'kadence/column' ];
 								secondWidthString={ secondWidthString }
 							/>
 						) }
+						{console.log(1)}
 						<div { ...innerBlocksProps } />
 					</>
 				) }
@@ -1157,12 +1171,19 @@ const RowLayoutEditContainerWrapper = withDispatch(
 		 * @param {number} newColumns      New column count.
 		 */
 		updateColumns( previousColumns, newColumns ) {
+			console.log('in update columns');
 			const { clientId } = ownProps;
 			const { replaceInnerBlocks } = dispatch( blockEditorStore );
 			const { getBlocks } = registry.select( blockEditorStore );
 
 			let innerBlocks = getBlocks( clientId );
 			const isAddingColumn = newColumns > previousColumns;
+			console.log(clientId);
+			console.log(newColumns);
+			console.log(previousColumns);
+			console.log(innerBlocks);
+			console.log(innerBlocks.length);
+			console.log(isAddingColumn);
 
 
 			if ( isAddingColumn ) {
