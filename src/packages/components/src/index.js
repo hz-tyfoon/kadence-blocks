@@ -52,6 +52,7 @@ export { default as TagSelect } from './tag-select';
 export { default as GapSizeControl } from './gap-controls';
 export { default as ResponsiveGapSizeControl } from './gap-controls/responsive';
 export { default as CopyPasteAttributes } from './copy-paste-attributes';
+export { default as TaxonomySelect } from './taxonomy-select';
 
 /* Panels */
 export { default as ColorGroup } from './panels/color-group';
