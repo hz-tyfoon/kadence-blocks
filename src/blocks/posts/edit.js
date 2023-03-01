@@ -348,7 +348,7 @@ function KadencePosts( { attributes, className, setAttributes, taxList, taxOptio
 								<>
 									{( undefined !== taxonomyList && 0 !== taxonomyList.length ) && (
 										<div className="term-select-form-row">
-											<label htmlFor={'tax-selection'} className="screen-reader-text">
+											{/* <label htmlFor={'tax-selection'} className="screen-reader-text">
 												{__( 'Select Taxonomy', 'kadence-blocks' )}
 											</label>
 											<Select
@@ -362,28 +362,20 @@ function KadencePosts( { attributes, className, setAttributes, taxList, taxOptio
 												isClearable={true}
 												maxMenuHeight={300}
 												placeholder={__( 'Select Taxonomy', 'kadence-blocks' )}
+											/> */}
+											<TaxonomySelect
+												label={ __( 'Select Taxonomy', 'kadence-blocks' ) }
+												value={ getTaxSelectValue() }
+												source={ postType }
+												termIsMulti={ true }
+												onChange={ ( val ) => {
+													saveTaxSelectValue( val );
+												} }
 											/>
 										</div>
 									)}
 									{( undefined !== taxonomyOptions && 0 !== taxonomyOptions.length ) && (
 										<>
-											<div className="term-select-form-row">
-												<label htmlFor={'terms-selection'} className="screen-reader-text">
-													{__( 'Select Terms', 'kadence-blocks' )}
-												</label>
-												<Select
-													value={categories}
-													onChange={( value ) => {
-														setAttributes( { categories: ( value ? value : [] ) } );
-													}}
-													id={'terms-selection'}
-													options={taxonomyOptions}
-													isMulti={true}
-													isClearable={true}
-													maxMenuHeight={300}
-													placeholder={__( 'Select', 'kadence-blocks' )}
-												/>
-											</div>
 											<RadioControl
 												help={__( 'Whether to include or exclude items from selected terms.', 'kadence-blocks' )}
 												selected={( undefined !== excludeTax ? excludeTax : 'include' )}
