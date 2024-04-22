@@ -681,27 +681,27 @@ function KadenceAccordionComponent(props) {
 	// Title Border Radius
 	const previewTitleRadiusTop = getPreviewSize(
 		getPreviewDevice,
-		undefined !== titleBorderRadius ? titleBorderRadius[0] : '',
-		undefined !== tabletTitleBorderRadius ? tabletTitleBorderRadius[0] : '',
-		undefined !== mobileTitleBorderRadius ? mobileTitleBorderRadius[0] : ''
+		undefined !== titleBorderRadius?.[0] ? titleBorderRadius[0] : '',
+		undefined !== tabletTitleBorderRadius?.[0] ? tabletTitleBorderRadius[0] : '',
+		undefined !== mobileTitleBorderRadius?.[0] ? mobileTitleBorderRadius[0] : ''
 	);
 	const previewTitleRadiusRight = getPreviewSize(
 		getPreviewDevice,
-		undefined !== titleBorderRadius ? titleBorderRadius[1] : '',
-		undefined !== tabletTitleBorderRadius ? tabletTitleBorderRadius[1] : '',
-		undefined !== mobileTitleBorderRadius ? mobileTitleBorderRadius[1] : ''
+		undefined !== titleBorderRadius?.[1] ? titleBorderRadius[1] : '',
+		undefined !== tabletTitleBorderRadius?.[1] ? tabletTitleBorderRadius[1] : '',
+		undefined !== mobileTitleBorderRadius?.[1] ? mobileTitleBorderRadius[1] : ''
 	);
 	const previewTitleRadiusBottom = getPreviewSize(
 		getPreviewDevice,
-		undefined !== titleBorderRadius ? titleBorderRadius[2] : '',
-		undefined !== tabletTitleBorderRadius ? tabletTitleBorderRadius[2] : '',
-		undefined !== mobileTitleBorderRadius ? mobileTitleBorderRadius[2] : ''
+		undefined !== titleBorderRadius?.[2] ? titleBorderRadius[2] : '',
+		undefined !== tabletTitleBorderRadius?.[2] ? tabletTitleBorderRadius[2] : '',
+		undefined !== mobileTitleBorderRadius?.[2] ? mobileTitleBorderRadius[2] : ''
 	);
 	const previewTitleRadiusLeft = getPreviewSize(
 		getPreviewDevice,
-		undefined !== titleBorderRadius ? titleBorderRadius[3] : '',
-		undefined !== tabletTitleBorderRadius ? tabletTitleBorderRadius[3] : '',
-		undefined !== mobileTitleBorderRadius ? mobileTitleBorderRadius[3] : ''
+		undefined !== titleBorderRadius?.[3] ? titleBorderRadius[3] : '',
+		undefined !== tabletTitleBorderRadius?.[3] ? tabletTitleBorderRadius[3] : '',
+		undefined !== mobileTitleBorderRadius?.[3] ? mobileTitleBorderRadius[3] : ''
 	);
 
 	const inheritBorder = [titleBorder, tabletTitleBorder, mobileTitleBorder];
@@ -1247,7 +1247,8 @@ function KadenceAccordionComponent(props) {
 			.kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner a:hover  {
 				${linkHoverColor ? 'color:' + KadenceColorOutput(linkHoverColor) : ''}
 			}
-				.kt-accordion-${uniqueID} .kt-blocks-accordion-header {
+				.kt-accordion-${uniqueID} .kt-blocks-accordion-header,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID} .kt-blocks-accordion-header {
 					${titleStyles?.[0]?.color ? 'color:' + KadenceColorOutput(titleStyles[0].color) : ''};
 					${previewTitleBorderTop ? 'border-top:' + previewTitleBorderTop : ''};
 					${previewTitleBorderRight ? 'border-right:' + previewTitleBorderRight : ''};
@@ -1261,10 +1262,10 @@ function KadenceAccordionComponent(props) {
 							: ''
 					};
 					${!previewTitleBorderLeft && previewTitleBorderColorLeft ? 'border-left-color:' + previewTitleBorderColorLeft : ''};
-					${previewTitleRadiusTop ? 'border-top-left-radius:' + previewTitleRadiusTop + titleBorderRadiusUnit : ''};
-					${previewTitleRadiusRight ? 'border-top-right-radius:' + previewTitleRadiusRight + titleBorderRadiusUnit : ''};
-					${previewTitleRadiusBottom ? 'border-bottom-right-radius:' + previewTitleRadiusBottom + titleBorderRadiusUnit : ''};
-					${previewTitleRadiusLeft ? 'border-bottom-left-radius:' + previewTitleRadiusLeft + titleBorderRadiusUnit : ''};
+					${previewTitleRadiusTop ? 'border-top-left-radius:' + previewTitleRadiusTop + titleBorderRadiusUnit : 'border-top-left-radius: 0px'};
+					${previewTitleRadiusRight ? 'border-top-right-radius:' + previewTitleRadiusRight + titleBorderRadiusUnit : 'border-top-right-radius: 0px'};
+					${previewTitleRadiusBottom ? 'border-bottom-right-radius:' + previewTitleRadiusBottom + titleBorderRadiusUnit : 'border-bottom-right-radius: 0px'};
+					${previewTitleRadiusLeft ? 'border-bottom-left-radius:' + previewTitleRadiusLeft + titleBorderRadiusUnit : 'border-bottom-left-radius: 0px'};
 					${titleStyles?.[0]?.background ? 'background-color:' + KadenceColorOutput(titleStyles[0].background) : ''};
 					${
 						'' !== previewTitlePaddingTop
@@ -1421,7 +1422,8 @@ function KadenceAccordionComponent(props) {
 							: KadenceColorOutput(titleStyles[0].colorHover)
 					};
 				}
-				.kt-accordion-${uniqueID} .kt-accordion-panel-active .kt-blocks-accordion-header {
+				.kt-accordion-${uniqueID} .kt-accordion-panel-active .kt-blocks-accordion-header,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID} .kt-accordion-panel-active .kt-blocks-accordion-header {
 					${titleStyles?.[0]?.colorActive ? 'color:' + KadenceColorOutput(titleStyles[0].colorActive) : ''};
 					${previewTitleBorderActiveTop ? 'border-top:' + previewTitleBorderActiveTop : ''};
 					${previewTitleBorderActiveRight ? 'border-right:' + previewTitleBorderActiveRight : ''};
@@ -1450,7 +1452,9 @@ function KadenceAccordionComponent(props) {
 					${titleStyles?.[0]?.backgroundActive ? 'background-color:' + KadenceColorOutput(titleStyles[0].backgroundActive) : ''};
 				}
 				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:before,
-				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:after {
+				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:after,
+				.wp-block-kadence-accordion .wp-block-kadence-accordio .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:before,
+				.wp-block-kadence-accordion .wp-block-kadence-accordio .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:after {
 					background-color: ${
 						'' !== iconColor.active
 							? KadenceColorOutput(iconColor.active)
@@ -1458,10 +1462,13 @@ function KadenceAccordionComponent(props) {
 					};
 				}
 				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:before,
-				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:after {
+				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:after,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:before,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:after {
 					background-color: ${KadenceColorOutput(titleStyles[0].backgroundActive)};
 				}
-				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger {
+				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger {
 					background-color: ${KadenceColorOutput(titleStyles[0].colorActive)};
 				}
 

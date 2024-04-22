@@ -103,6 +103,7 @@ body.rtl .kt-size-tabs .components-tab-panel__tabs, body.rtl .components-button-
 .wp-block-kadence-accordion .kt-accordion-inner-wrap > .wp-block-kadence-pane:first-child {
 	margin-top: 0;
 }
+
 .kt-blocks-accordion-header {
     align-content: space-between;
     align-items: center;
@@ -244,6 +245,11 @@ button.components-button.kt-accordion-add.is-primary {
     order: -1;
     margin-left: 0;
     margin-right:10px;
+}
+.kt-accordion-inner-wrap:not(.kt-accodion-icon-side-left) .kt-blocks-accordion-icon-trigger {
+	order: 0;
+	margin-left: auto;
+	margin-right: 0;
 }
 .kt-accodion-icon-style-basic, .kt-accodion-icon-style-basiccircle {
 	.kt-blocks-accordion-header.kt-accordion-panel-active {
