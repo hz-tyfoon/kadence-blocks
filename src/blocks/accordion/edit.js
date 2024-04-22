@@ -1238,15 +1238,15 @@ function KadenceAccordionComponent(props) {
 	const renderCSS = (
 		<style>
 			{`
-			.kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner .kt-svg-icon-list-item-wrap, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner p, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner h1, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner h2, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner h3, .kt-accordion-${uniqueID} .kt-accordion-panel-inner h4, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner h5, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner h6 {
-				${textColor ? `color: ${KadenceColorOutput(textColor)};` : ''}
-			}
-			.kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner a  {
-				${linkColor ? 'color:' + KadenceColorOutput(linkColor) : ''}
-			}
-			.kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner a:hover  {
-				${linkHoverColor ? 'color:' + KadenceColorOutput(linkHoverColor) : ''}
-			}
+				.kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner .kt-svg-icon-list-item-wrap, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner p, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner h1, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner h2, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner h3, .kt-accordion-${uniqueID} .kt-accordion-panel-inner h4, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner h5, .kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner h6 {
+					${textColor ? `color: ${KadenceColorOutput(textColor)};` : ''}
+				}
+				.kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner a  {
+					${linkColor ? 'color:' + KadenceColorOutput(linkColor) : ''}
+				}
+				.kt-accordion-${uniqueID} .kt-accordion-panel .kt-accordion-panel-inner a:hover  {
+					${linkHoverColor ? 'color:' + KadenceColorOutput(linkHoverColor) : ''}
+				}
 				.kt-accordion-${uniqueID} .kt-blocks-accordion-header,
 				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID} .kt-blocks-accordion-header {
 					${titleStyles?.[0]?.color ? 'color:' + KadenceColorOutput(titleStyles[0].color) : ''};
@@ -1262,10 +1262,26 @@ function KadenceAccordionComponent(props) {
 							: ''
 					};
 					${!previewTitleBorderLeft && previewTitleBorderColorLeft ? 'border-left-color:' + previewTitleBorderColorLeft : ''};
-					${previewTitleRadiusTop ? 'border-top-left-radius:' + previewTitleRadiusTop + titleBorderRadiusUnit : 'border-top-left-radius: 0px'};
-					${previewTitleRadiusRight ? 'border-top-right-radius:' + previewTitleRadiusRight + titleBorderRadiusUnit : 'border-top-right-radius: 0px'};
-					${previewTitleRadiusBottom ? 'border-bottom-right-radius:' + previewTitleRadiusBottom + titleBorderRadiusUnit : 'border-bottom-right-radius: 0px'};
-					${previewTitleRadiusLeft ? 'border-bottom-left-radius:' + previewTitleRadiusLeft + titleBorderRadiusUnit : 'border-bottom-left-radius: 0px'};
+					${
+						previewTitleRadiusTop
+							? 'border-top-left-radius:' + previewTitleRadiusTop + titleBorderRadiusUnit
+							: 'border-top-left-radius: 0px'
+					};
+					${
+						previewTitleRadiusRight
+							? 'border-top-right-radius:' + previewTitleRadiusRight + titleBorderRadiusUnit
+							: 'border-top-right-radius: 0px'
+					};
+					${
+						previewTitleRadiusBottom
+							? 'border-bottom-right-radius:' + previewTitleRadiusBottom + titleBorderRadiusUnit
+							: 'border-bottom-right-radius: 0px'
+					};
+					${
+						previewTitleRadiusLeft
+							? 'border-bottom-left-radius:' + previewTitleRadiusLeft + titleBorderRadiusUnit
+							: 'border-bottom-left-radius: 0px'
+					};
 					${titleStyles?.[0]?.background ? 'background-color:' + KadenceColorOutput(titleStyles[0].background) : ''};
 					${
 						'' !== previewTitlePaddingTop
@@ -1352,8 +1368,13 @@ function KadenceAccordionComponent(props) {
 				.kt-accordion-${uniqueID} .kt-accordion-panel-inner p:last-of-type{
 					margin-bottom: 0;
 				}
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not(.kt-accodion-icon-style-none) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger {
+					display: block;
+				}
 				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger:before,
-				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger:after {
+				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger:after,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger:before,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger:after {
 					background-color: ${
 						'' !== iconColor.standard
 							? KadenceColorOutput(iconColor.standard)
@@ -1361,17 +1382,21 @@ function KadenceAccordionComponent(props) {
 					};
 				}
 				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger:before,
-				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger:after {
+				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger:after,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger:before,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger:after {
 					background-color: ${KadenceColorOutput(titleStyles[0].background)};
 				}
-				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger {
+				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-blocks-accordion-header .kt-blocks-accordion-icon-trigger {
 					background-color: ${
 						'' !== iconColor.standard
 							? KadenceColorOutput(iconColor.standard)
 							: KadenceColorOutput(titleStyles[0].color)
 					};
 				}
-				.kt-accordion-${uniqueID} .kt-blocks-accordion-header:hover {
+				.kt-accordion-${uniqueID} .kt-blocks-accordion-header:hover,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID} .kt-blocks-accordion-header:hover {
 					${titleStyles?.[0]?.colorHover ? 'color:' + KadenceColorOutput(titleStyles[0].colorHover) : ''};
 					${previewTitleBorderHoverTop ? 'border-top:' + previewTitleBorderHoverTop : ''};
 					${previewTitleBorderHoverRight ? 'border-right:' + previewTitleBorderHoverRight : ''};
@@ -1400,7 +1425,9 @@ function KadenceAccordionComponent(props) {
 					${titleStyles?.[0]?.backgroundHover ? 'background-color:' + KadenceColorOutput(titleStyles[0].backgroundHover) : ''};
 				}
 				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger:before,
-				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger:after {
+				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger:after,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger:before,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger:after  {
 					background-color: ${
 						'' !== iconColor.hover
 							? KadenceColorOutput(iconColor.hover)
@@ -1408,14 +1435,17 @@ function KadenceAccordionComponent(props) {
 					};
 				}
 				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger:before,
-				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger:after {
+				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger:after,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger:before,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger:after {
 					background-color: ${
 						'' !== iconColor.hover
 							? KadenceColorOutput(iconColor.hover)
 							: KadenceColorOutput(titleStyles[0].backgroundHover)
 					};
 				}
-				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger {
+				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basic ):not( .kt-accodion-icon-style-xclose ):not( .kt-accodion-icon-style-arrow ) .kt-accordion-pane:not(.kt-accordion-panel-active) .kt-blocks-accordion-header:hover .kt-blocks-accordion-icon-trigger {
 					background-color: ${
 						'' !== iconColor.hover
 							? KadenceColorOutput(iconColor.hover)
@@ -1453,8 +1483,8 @@ function KadenceAccordionComponent(props) {
 				}
 				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:before,
 				.kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:after,
-				.wp-block-kadence-accordion .wp-block-kadence-accordio .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:before,
-				.wp-block-kadence-accordion .wp-block-kadence-accordio .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:after {
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:before,
+				.wp-block-kadence-accordion .wp-block-kadence-accordion .kt-accordion-${uniqueID}:not( .kt-accodion-icon-style-basiccircle ):not( .kt-accodion-icon-style-xclosecircle ):not( .kt-accodion-icon-style-arrowcircle ) .kt-accordion-panel-active .kt-blocks-accordion-icon-trigger:after {
 					background-color: ${
 						'' !== iconColor.active
 							? KadenceColorOutput(iconColor.active)
@@ -1472,7 +1502,7 @@ function KadenceAccordionComponent(props) {
 					background-color: ${KadenceColorOutput(titleStyles[0].colorActive)};
 				}
 
-				`}
+			`}
 		</style>
 	);
 
