@@ -978,6 +978,7 @@ function RowLayoutEditContainer(props) {
 		[`kb-grid-columns-${columns}`]: columns,
 	});
 	const containerRef = useRef(null);
+	const lockBlocks = 'all' === templateLock ? 'contentOnly' : templateLock;
 	const innerBlocksProps = useInnerBlocksProps(
 		{
 			ref: containerRef,
@@ -1013,7 +1014,7 @@ function RowLayoutEditContainer(props) {
 			allowedBlocks: ALLOWED_BLOCKS,
 			orientation: 'horizontal',
 			renderAppender: false,
-			templateLock: templateLock ? templateLock : undefined,
+			templateLock: lockBlocks ? lockBlocks : undefined,
 		}
 	);
 	const paddingMouseOver = mouseOverVisualizer();
